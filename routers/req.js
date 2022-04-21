@@ -1,23 +1,10 @@
 const express=require("express");
 const router=express.Router();
 const reqcoll=require("../models/requestmoney");
-const redisClient=require("../models/redis")
 router.get("/",async(req,res)=>{
-    var tutorialName = "allreqList";
-    console.log(tutorialName);
-    console.log(await redisClient.EXISTS("allTutorialsList"))
-    d=await redisClient.EXISTS(tutorialName)
-    if(d!=0){
-        data = await redisClient.get(tutorialName)
-        console.log("Getting data from Redis Cache");
-        console.log(data);
-        res.json(JSON.parse(data));
-    }
-    else{
 	response=await reqcoll.find();
     	dal = await  redisClient.setEx(tutorialName,600, JSON.stringify(response));
         res.json(response);   
-    }
 
 });
 
