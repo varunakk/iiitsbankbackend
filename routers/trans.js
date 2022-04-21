@@ -1,7 +1,6 @@
 const express=require("express");
 const router=express.Router();
 const transcoll=require("../models/trans");
-const redisClient=require("../models/redis")
 
 router.get("/",async(req,res)=>{
 try{
@@ -16,23 +15,10 @@ console.log(err);
 
 
 router.get("/:acc",async(req,res)=>{
-    var tutorialName = "alltransList";
-    console.log(tutorialName);
-    console.log(await redisClient.EXISTS("allTutorialsList"))
-    d=await redisClient.EXISTS(tutorialName)
-    if(d!=0){
-        data = await redisClient.get(tutorialName)
-        console.log("Getting data from Redis Cache");
-        console.log(data);
-        res.json(JSON.parse(data));
-    }
-    else{
 	trans = await transcoll.find({ $or: [ { to: req.params.acc }, { from: req.params.acc  } ] })
         dal = await  redisClient.setEx(tutorialName,600, JSON.stringify(trans));
         res.json(trans);   
-            
-    }
-
+        
 });
 
 
