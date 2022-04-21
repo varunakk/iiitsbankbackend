@@ -1,6 +1,5 @@
 const express=require("express");
 const router=express.Router();
-const redisClient=require("../models/redis")
 //http://localhost:5000/api-docs/#/ for swagger 
 
 const usercoll=require("../models/users");
