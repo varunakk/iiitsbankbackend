@@ -1,10 +1,3 @@
-if(process.env.NODE_ENV === 'production') {
-  // set static folder
-  app.use(express.static('./../src/'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../', 'src', 'App.js'));
-  });
-
 const express =require("express");
 const mongoose=require("mongoose");
 const app=express();
@@ -20,16 +13,6 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const fsr = require('file-stream-rotator');
 //url defines the location of the database that we are creating in localhost
 const url="mongodb://localhost/bank";
-//here useNewUrlparser is used for depreciation errors
-// mongoose.connect("mongodb+srv://<vikram>:<vikram123>@cluster0.uszdr.mongodb.net/Bank?retryWrites=true&w=majority",{useNewUrlParser:true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1},);
-// const uri = "mongodb+srv://<vikram>:<vikram123>@cluster0.uszdr.mongodb.net/Bank?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   console.log("servervv")
-//   client.close();
-//  });
 mongoose.connect(
   "mongodb+srv://vikram:vikram123@cluster0.uszdr.mongodb.net/Bank?retryWrites=true&w=majority",
   {
@@ -42,7 +25,7 @@ con.on('open',()=>{
   console.log("connected");
 });
 
-  const buildPath = path.join(__dirname, '..', 'build');
+const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
 
 //.on is used to trigger a event 
@@ -104,68 +87,3 @@ app.listen(process.env.PORT||5000,()=>{
     console.log("server started");
 });
 
-
-/*const express =require("express");
-const mongoose=require("mongoose");
-const app=express();
-require('dotenv').config()
-const swaggerUi = require('swagger-ui-express')
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./swagger.yaml');
-const path=require('path')
-const multer  = require('multer')
-//const upload = multer({ dest: 'uploads/' })
-
-const fsr = require('file-stream-rotator');
-//url defines the location of the database that we are creating in localhost
-const url="mongodb+srv://vikram:vikram123@cluster0.uszdr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";//"mongodb://localhost/bank";
-//here useNewUrlparser is used for depreciation errors
-//mongoose.connect(url,{useNewUrlParser:true,
-//  useUnifiedTopology: true
-//});
-mongoose.connect(
-  "mongodb+srv://vikram:vikram123@cluster0.uszdr.mongodb.net/Bank?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);  
-const con=mongoose.connection;
-
-//const con=mongoose.connection;
-//.on is used to trigger a event 
-module.exports = con;
-
-var cors = require('cors')
-app.use(cors())
-
-app.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument)
-  );
-
-var morgan = require('morgan')
-//morgan('combined', {
-//  skip: function (req, res) { return res.statusCode < 400 }
-//})
-//morgan(function (tokens, req, res) {
- // return [
-  //  tokens.method(req, res),
-  ///  tokens.remote-addr(req,res),
-    //tokens.url(req, res),
-    //tokens.status(req, res),
-    //tokens.res(req, res, 'content-length'), '-',
-    //tokens['response-time'](req, res), 'ms'
-  //].join(' ')
-//})
-
-//morgan.token('host', function(req, res){
-//    return req.hostname;
-//})
-//morgan.token("wbdaccess", "User trying to access the :url");
-let logsinfo = fsr.getStream({filename:"test.log", frequency:"1h", verbose: true});
-//app.use(morgan('wbdaccess', {stream: logsinfo}))
-app.use(morgan('combined',{stream: logsinfo}));
-
-*/
