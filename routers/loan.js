@@ -4,8 +4,6 @@ const multer = require("multer");
 const uuidv4 = require('uuid/v4');
 const router=express.Router();
 
-const redisClient=require("../models/redis")
-
 const loancoll=require("../models/loan");
 const DIR="./public/";
 const storage = multer.diskStorage({
