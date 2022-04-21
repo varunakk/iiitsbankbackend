@@ -10,7 +10,7 @@ try{
     console.log(response);
     res.json(response);
 }catch(err){
-console.log(err);
+console.log("error from fnc",err);
 }
 });
 
