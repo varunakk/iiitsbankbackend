@@ -43,24 +43,11 @@ console.log(err);
 
 
 router.get("/:acc",async(req,res)=>{
-    var tutorialName = "allLoanList";
-    console.log(tutorialName);
-    console.log(await redisClient.EXISTS("allTutorialsList"))
-    d=await redisClient.EXISTS(tutorialName)
-    if(d!=0){
-        data = await redisClient.get(tutorialName)
-        console.log("Getting data from Redis Cache");
-        console.log(data);
-        res.json(JSON.parse(data));
-    }
-    else{
         lon = await loancoll.find( {acc: req.params.acc  })   // ({ $or: [ { id : req.params.acc }, {acc: req.params.acc  } ] } )
          console.log(lon);
             console.log(JSON.stringify(lon));
             dal = await  redisClient.setEx(tutorialName,600, JSON.stringify(lon));
-            res.json(lon);   
-            
-    }
+            res.json(lon);               
 });
 
 router.get("/:acc/:id",async(req,res)=>{
